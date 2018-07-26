@@ -40,7 +40,7 @@ public class StationControllerTest {
         given(stationService.getStations()).willReturn(stations);
 
         mvc.perform(get("/api/station/stations")
-        .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].name", is(stations.get(0).name)));

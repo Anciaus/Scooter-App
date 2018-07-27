@@ -1,6 +1,6 @@
 package com.tieto.scooter.services;
 
-import com.tieto.scooter.models.StationViewModel;
+import com.tieto.scooter.models.StationDto;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,13 +12,13 @@ import static java.util.Arrays.asList;
 @Service
 public class StationService {
 
-    public List<StationViewModel> getStations() {
+    public List<StationDto> getStations() {
         return new ArrayList<>(asList(
-                setup(new StationViewModel(), station -> {
+                setup(new StationDto(), station -> {
                     station.name = "Andromeda";
                     station.parkedScooters = 2;
                 }),
-                setup(new StationViewModel(), station -> {
+                setup(new StationDto(), station -> {
                     station.name = "MilkyWay";
                     station.parkedScooters = 1;
                 })

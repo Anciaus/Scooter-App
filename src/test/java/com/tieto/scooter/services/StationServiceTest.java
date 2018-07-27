@@ -1,6 +1,6 @@
 package com.tieto.scooter.services;
 
-import com.tieto.scooter.models.StationViewModel;
+import com.tieto.scooter.models.StationDto;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,7 +28,7 @@ public class StationServiceTest {
 
     @Test
     public void getStations_should_return_two_stations() {
-        List<StationViewModel> actual = stationService.getStations();
+        List<StationDto> actual = stationService.getStations();
 
         Assert.assertEquals(2, actual.size());
     }

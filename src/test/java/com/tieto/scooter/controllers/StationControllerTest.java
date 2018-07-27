@@ -1,6 +1,6 @@
 package com.tieto.scooter.controllers;
 
-import com.tieto.scooter.models.StationViewModel;
+import com.tieto.scooter.models.StationDto;
 import com.tieto.scooter.services.StationService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,7 +35,7 @@ public class StationControllerTest {
 
     @Test
     public void stations_should_return_available_station_Json() throws Exception {
-        List<StationViewModel> stations = getStations();
+        List<StationDto> stations = getStations();
 
         given(stationService.getStations()).willReturn(stations);
 
@@ -46,13 +46,13 @@ public class StationControllerTest {
                 .andExpect(jsonPath("$[0].name", is(stations.get(0).name)));
     }
 
-    private List<StationViewModel> getStations() {
+    private List<StationDto> getStations() {
         return new ArrayList<>(asList(
-                setup(new StationViewModel(), station -> {
+                setup(new StationDto(), station -> {
                     station.name = "testName";
                     station.parkedScooters = 2;
                 }),
-                setup(new StationViewModel(), station -> {
+                setup(new StationDto(), station -> {
                     station.name = "testName2";
                     station.parkedScooters = 1;
                 })

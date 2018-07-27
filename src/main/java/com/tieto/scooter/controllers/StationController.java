@@ -1,6 +1,6 @@
 package com.tieto.scooter.controllers;
 
-import com.tieto.scooter.models.StationViewModel;
+import com.tieto.scooter.models.StationDto;
 import com.tieto.scooter.services.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +17,7 @@ public class StationController {
     StationService stationService;
 
     @GetMapping("/stations")
-    public List<StationViewModel> stations() {
+    public List<StationDto> stations() {
         return stationService.getStations();
     }
 }

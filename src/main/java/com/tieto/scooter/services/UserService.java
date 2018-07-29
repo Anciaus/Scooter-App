@@ -1,5 +1,6 @@
 package com.tieto.scooter.services;
 
+import com.tieto.scooter.dataAccess.UserRepository;
 import com.tieto.scooter.models.UserDto;
 import com.tieto.scooter.utils.Dto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,17 +11,23 @@ import java.util.Random;
 @Service
 public class UserService {
 
-    @Autowired
-    MessagingService messagingService;
+    private final MessagingService messagingService;
 
-    private Random random = new Random();
+    private final UserRepository userRepository;
+
+    private  Random random = new Random();
+
+    @Autowired
+    public UserService(MessagingService messagingService, UserRepository userRepository) {
+        this.messagingService = messagingService;
+        this.userRepository = userRepository;
+    }
 
     public boolean sendToken(String phoneNumber) {
 
-        Integer token = random.nextInt(10000) + 1000;
-        String message = "Your secret token is: " + token.toString();
+        String token = getToken();
 
-        boolean result = messagingService.sendMessage(phoneNumber, message);
+        boolean result = messagingService.sendMessage(phoneNumber, token);
 
         if (!result) {
             return false;
@@ -28,9 +35,17 @@ public class UserService {
 
         UserDto user = Dto.setup(new UserDto(), u -> {
             u.phoneNumber = phoneNumber;
-            u.token = token.toString();
+            u.token = token;
         });
 
+        userRepository.createUser(user);
+
         return true;
+    }
+
+    private String getToken() {
+        final int MIN = 1000;
+        final int MAX = 9999;
+        return String.valueOf(random.nextInt((MAX - MIN) + 1) + MIN);
     }
 }

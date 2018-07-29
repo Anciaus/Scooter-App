@@ -22,7 +22,9 @@ public class MessagingService {
     }
 
 
-    boolean sendMessage(String phoneNumber, String text) {
+    boolean sendMessage(String phoneNumber, String token) {
+
+        String text = "Your secret token is: " + token;
 
         MessageDto message = setup(new MessageDto(), m ->{
             m.phoneNumber = phoneNumber;

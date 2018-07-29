@@ -13,8 +13,12 @@ import java.util.List;
 @RequestMapping("/api/station")
 public class StationController {
 
+    private final StationService stationService;
+
     @Autowired
-    StationService stationService;
+    public StationController(StationService stationService) {
+        this.stationService = stationService;
+    }
 
     @GetMapping("/stations")
     public List<StationDto> stations() {

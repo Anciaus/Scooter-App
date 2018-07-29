@@ -35,10 +35,12 @@ public class StationControllerTest {
 
     @Test
     public void stations_should_return_available_station_Json() throws Exception {
+        // given
         List<StationDto> stations = getStations();
 
         given(stationService.getStations()).willReturn(stations);
 
+        // when/then
         mvc.perform(get("/api/station/stations")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

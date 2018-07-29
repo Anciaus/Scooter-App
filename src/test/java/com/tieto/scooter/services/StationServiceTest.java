@@ -2,11 +2,9 @@ package com.tieto.scooter.services;
 
 import com.tieto.scooter.models.StationDto;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -14,17 +12,12 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 public class StationServiceTest {
 
-    @TestConfiguration
-    static class StationServiceContextConfiguration {
-
-        @Bean
-        public StationService stationService() {
-            return new StationService();
-        }
-    }
-
-    @Autowired
     private StationService stationService;
+
+    @Before
+    public void setUp() {
+        stationService = new StationService();
+    }
 
     @Test
     public void getStations_should_return_two_stations() {

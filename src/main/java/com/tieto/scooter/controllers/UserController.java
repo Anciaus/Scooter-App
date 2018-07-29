@@ -11,8 +11,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/user")
 public class UserController {
 
+    private final UserService userService;
+
     @Autowired
-    UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping("/token")
     public ResponseEntity token(@RequestBody TokenRequestModel tokenRequest) {

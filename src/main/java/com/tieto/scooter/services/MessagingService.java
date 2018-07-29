@@ -12,12 +12,12 @@ import static com.tieto.scooter.utils.Dto.setup;
 @Service
 public class MessagingService {
 
-    @Value("${messagingUri}")
-    private String messagingUri;
+    private final String messagingUri;
 
     private final RestTemplate restTemplate;
 
-    public MessagingService(RestTemplateBuilder restTemplateBuilder) {
+    public MessagingService(@Value("${messagingUri}") String messagingUri, RestTemplateBuilder restTemplateBuilder) {
+        this.messagingUri = messagingUri;
         this.restTemplate = restTemplateBuilder.build();
     }
 

@@ -1,9 +1,8 @@
 package lt.tieto.scooter.services;
 
 import lt.tieto.scooter.controllers.models.RegistrationRequest;
-import lt.tieto.scooter.repos.UserRepository;
 import lt.tieto.scooter.models.UserDto;
-import lt.tieto.scooter.utils.Dto;
+import lt.tieto.scooter.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,10 +33,9 @@ public class UserService {
             return false;
         }
 
-        UserDto user = Dto.setup(new UserDto(), u -> {
-            u.phoneNumber = phoneNumber;
-            u.token = token;
-        });
+        UserDto user = new UserDto();
+        user.phoneNumber = phoneNumber;
+        user.token = token;
 
         userRepository.createUser(user);
 

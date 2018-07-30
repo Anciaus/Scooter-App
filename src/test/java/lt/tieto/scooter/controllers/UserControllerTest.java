@@ -14,7 +14,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import static lt.tieto.scooter.utils.Dto.setup;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -72,10 +71,7 @@ public class UserControllerTest {
         // given
         given(userService.validateUser(any())).willReturn(TEST_TOKEN);
 
-        RegistrationRequest registrationRequest = setup(new RegistrationRequest(), r -> {
-            r.phoneNumber = "+37061812345";
-            r.token = "1234";
-        });
+        RegistrationRequest registrationRequest = getRegistrationRequest();
 
         // when
         ResultActions result = callRegistrationEndpoint(registrationRequest);
@@ -90,16 +86,20 @@ public class UserControllerTest {
         // given
         given(userService.validateUser(any())).willReturn(null);
 
-        RegistrationRequest registrationRequest = setup(new RegistrationRequest(), r -> {
-            r.phoneNumber = "+37061812345";
-            r.token = "1234";
-        });
+        RegistrationRequest registrationRequest = getRegistrationRequest();
 
         // when
         ResultActions result = callRegistrationEndpoint(registrationRequest);
 
         // then
         result.andExpect(status().is(500));
+    }
+
+    private RegistrationRequest getRegistrationRequest() {
+        RegistrationRequest registrationRequest = new RegistrationRequest();
+        registrationRequest.phoneNumber = "+37061812345";
+        registrationRequest.token = "1234";
+        return registrationRequest;
     }
 
     private ResultActions callTokenEndpoint(TokenRequest tokenRequest) throws Exception {
@@ -121,6 +121,9 @@ public class UserControllerTest {
     }
 
     private TokenRequest getTokenRequestModel() {
-        return setup(new TokenRequest(), t -> t.phoneNumber = "+37061812345");
+        TokenRequest tokenRequest = new TokenRequest();
+        tokenRequest.phoneNumber = "+37061812345";
+
+        return tokenRequest;
     }
 }

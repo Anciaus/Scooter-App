@@ -2,7 +2,6 @@ package lt.tieto.scooter.controllers;
 
 import lt.tieto.scooter.models.StationDto;
 import lt.tieto.scooter.services.StationService;
-import lt.tieto.scooter.utils.Dto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,15 +48,14 @@ public class StationControllerTest {
     }
 
     private List<StationDto> getStations() {
-        return new ArrayList<>(asList(
-                Dto.setup(new StationDto(), station -> {
-                    station.name = "testName";
-                    station.parkedScooters = 2;
-                }),
-                Dto.setup(new StationDto(), station -> {
-                    station.name = "testName2";
-                    station.parkedScooters = 1;
-                })
-        ));
+        StationDto station1 = new StationDto();
+        station1.name = "testName";
+        station1.parkedScooters = 2;
+
+        StationDto station2 = new StationDto();
+        station2.name = "testName2";
+        station2.parkedScooters = 1;
+
+        return new ArrayList<>(asList(station1, station2));
     }
 }

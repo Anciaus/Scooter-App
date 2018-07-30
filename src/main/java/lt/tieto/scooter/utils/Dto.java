@@ -37,21 +37,4 @@ public class Dto implements Serializable, Cloneable {
         return o1.equals(o2);
     }
 
-    public interface Setter<T> {
-        void setFieldsOf(T self);
-    }
-
-    public static <T> T setup(T object, Setter<T> setter) {
-        setter.setFieldsOf(object);
-        return object;
-    }
-
-    public static <T extends Dto> T cloned(T dto) {
-        try {
-            return (dto == null) ? null : (T) dto.clone();
-        } catch (CloneNotSupportedException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
 }

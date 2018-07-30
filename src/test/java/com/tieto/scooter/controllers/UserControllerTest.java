@@ -1,7 +1,8 @@
 package com.tieto.scooter.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tieto.scooter.controllers.models.TokenRequestModel;
+import com.tieto.scooter.controllers.models.RegistrationRequest;
+import com.tieto.scooter.controllers.models.TokenRequest;
 import com.tieto.scooter.services.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,9 +15,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static com.tieto.scooter.utils.Dto.setup;
+import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -35,10 +39,10 @@ public class UserControllerTest {
         // given
         given(userService.sendToken(anyString())).willReturn(true);
 
-        TokenRequestModel tokenRequest = getTokenRequestModel();
+        TokenRequest tokenRequest = getTokenRequestModel();
 
         // when
-        ResultActions endpoint = callEndpoint(tokenRequest);
+        ResultActions endpoint = callTokenEndpoint(tokenRequest);
 
         // then
         endpoint.andExpect(status().isOk());
@@ -51,17 +55,54 @@ public class UserControllerTest {
         // given
         given(userService.sendToken(anyString())).willReturn(false);
 
-        TokenRequestModel tokenRequest = getTokenRequestModel();
+        TokenRequest tokenRequest = getTokenRequestModel();
 
         // when
-        ResultActions endpoint = callEndpoint(tokenRequest);
+        ResultActions endpoint = callTokenEndpoint(tokenRequest);
 
         // then
         endpoint.andExpect(status().is(500));
 
     }
 
-    private ResultActions callEndpoint(TokenRequestModel tokenRequest) throws Exception {
+    @Test
+    public void validate_should_return_status_200_and_securityToken_if_it_was_valid() throws Exception {
+        final String TEST_TOKEN = "test-token";
+
+        // given
+        given(userService.validateUser(any())).willReturn(TEST_TOKEN);
+
+        RegistrationRequest registrationRequest = setup(new RegistrationRequest(), r -> {
+            r.phoneNumber = "+37061812345";
+            r.token = "1234";
+        });
+
+        // when
+        ResultActions result = callRegistrationEndpoint(registrationRequest);
+
+        // then
+        result.andExpect(status().is(200)).andExpect(jsonPath("securityToken", is(TEST_TOKEN)));
+    }
+
+    @Test
+    public void validate_should_return_status_500_if_no_security_token_was_returned() throws Exception {
+
+        // given
+        given(userService.validateUser(any())).willReturn(null);
+
+        RegistrationRequest registrationRequest = setup(new RegistrationRequest(), r -> {
+            r.phoneNumber = "+37061812345";
+            r.token = "1234";
+        });
+
+        // when
+        ResultActions result = callRegistrationEndpoint(registrationRequest);
+
+        // then
+        result.andExpect(status().is(500));
+    }
+
+    private ResultActions callTokenEndpoint(TokenRequest tokenRequest) throws Exception {
 
         ObjectMapper mapper = new ObjectMapper();
 
@@ -70,7 +111,16 @@ public class UserControllerTest {
                 .content(mapper.writeValueAsString(tokenRequest)));
     }
 
-    private TokenRequestModel getTokenRequestModel() {
-        return setup(new TokenRequestModel(), t -> t.phoneNumber = "+37061812345");
+    private ResultActions callRegistrationEndpoint(RegistrationRequest registrationRequest) throws Exception {
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        return mvc.perform(post("/api/user/validate")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(registrationRequest)));
+    }
+
+    private TokenRequest getTokenRequestModel() {
+        return setup(new TokenRequest(), t -> t.phoneNumber = "+37061812345");
     }
 }

@@ -1,5 +1,6 @@
 package com.tieto.scooter.services;
 
+import com.tieto.scooter.controllers.models.RegistrationRequest;
 import com.tieto.scooter.dataAccess.UserRepository;
 import com.tieto.scooter.models.UserDto;
 import com.tieto.scooter.utils.Dto;
@@ -47,5 +48,9 @@ public class UserService {
         final int MIN = 1000;
         final int MAX = 9999;
         return String.valueOf(random.nextInt((MAX - MIN) + 1) + MIN);
+    }
+
+    public String validateUser(RegistrationRequest registrationRequest) {
+        return "success";
     }
 }

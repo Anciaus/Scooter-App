@@ -1,4 +1,4 @@
-##Month With IT 2018
+## Month With IT 2018
 This is a starter backend application for Month With IT project taking place at Tieto Lithuania.
 
 Application is using SpringBoot with Spring DI and Spring MVC, Liquibase for DB migrations and JUnit for testing.

@@ -1,7 +1,7 @@
 package lt.tieto.scooter.services;
 
 import com.sun.deploy.net.HttpResponse;
-import lt.tieto.scooter.models.MessageDto;
+import lt.tieto.scooter.dtos.MessageDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;

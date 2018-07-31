@@ -1,4 +1,4 @@
-package lt.tieto.scooter.models;
+package lt.tieto.scooter.dtos;
 
 import lt.tieto.scooter.utils.Dto;
 

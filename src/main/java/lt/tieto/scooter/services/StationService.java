@@ -1,6 +1,6 @@
 package lt.tieto.scooter.services;
 
-import lt.tieto.scooter.models.StationDto;
+import lt.tieto.scooter.dtos.StationDto;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

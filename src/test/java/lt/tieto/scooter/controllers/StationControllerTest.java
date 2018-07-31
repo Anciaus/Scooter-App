@@ -1,6 +1,6 @@
 package lt.tieto.scooter.controllers;
 
-import lt.tieto.scooter.models.StationDto;
+import lt.tieto.scooter.dtos.StationDto;
 import lt.tieto.scooter.services.StationService;
 import org.junit.Test;
 import org.junit.runner.RunWith;

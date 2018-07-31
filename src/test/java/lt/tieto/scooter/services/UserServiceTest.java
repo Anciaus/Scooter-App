@@ -2,7 +2,8 @@ package lt.tieto.scooter.services;
 
 import lt.tieto.scooter.controllers.models.RegistrationRequest;
 import lt.tieto.scooter.repos.UserRepository;
-import lt.tieto.scooter.models.UserDto;
+import lt.tieto.scooter.dtos.UserDto;
+import lt.tieto.scooter.security.JwtTokenProvider;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +22,7 @@ public class UserServiceTest {
     private UserService userService;
     private MessagingService messagingService;
     private UserRepository userRepository;
+    private JwtTokenProvider jwtTokenProvider;
 
     private final String PHONE_NUMBER = "+37061812345";
 
@@ -28,7 +30,8 @@ public class UserServiceTest {
     public void setUp() {
         messagingService = mock(MessagingService.class);
         userRepository = mock(UserRepository.class);
-        userService = new UserService(messagingService, userRepository);
+        jwtTokenProvider = mock(JwtTokenProvider.class);
+        userService = new UserService(true, messagingService, userRepository, jwtTokenProvider);
     }
 
     @Test

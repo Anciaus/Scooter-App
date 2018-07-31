@@ -1,6 +1,6 @@
 package lt.tieto.scooter.repos.mappers;
 
-import lt.tieto.scooter.models.UserDto;
+import lt.tieto.scooter.dtos.UserDto;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

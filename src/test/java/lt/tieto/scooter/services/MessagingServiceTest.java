@@ -1,7 +1,7 @@
 package lt.tieto.scooter.services;
 
 import com.sun.deploy.net.HttpResponse;
-import lt.tieto.scooter.models.MessageDto;
+import lt.tieto.scooter.dtos.MessageDto;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,6 +1,6 @@
 package lt.tieto.scooter.repos;
 
-import lt.tieto.scooter.models.UserDto;
+import lt.tieto.scooter.dtos.UserDto;
 import lt.tieto.scooter.repos.mappers.UserMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -121,24 +121,6 @@ public class UserServiceTest {
         assertNull(result);
     }
 
-    @Test
-    public void validateUser_should_return_success_if_tokens_match() {
-        // given
-        UserDto user = new UserDto();
-        user.phoneNumber = "+37012345678";
-        user.token = "1234";
-
-        when(userRepository.getUserByPhoneNumber(anyString())).thenReturn(user);
-
-        RegistrationRequest registrationRequest = getRegistrationRequest();
-
-        // when
-        String result = userService.validateUser(registrationRequest);
-
-        // then
-        assertEquals("success", result);
-    }
-
     private RegistrationRequest getRegistrationRequest() {
         RegistrationRequest registrationRequest = new RegistrationRequest();
         registrationRequest.phoneNumber = "+37061812345";

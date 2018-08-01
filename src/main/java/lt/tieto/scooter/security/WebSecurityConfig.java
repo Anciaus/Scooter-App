@@ -33,10 +33,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Entry points
         http.authorizeRequests()//
-                .antMatchers("/api/user/token").permitAll()//
-                .antMatchers("/api/user/validate").permitAll()//
+                //For now we permit everything
+                .antMatchers("/**").permitAll();
+//                .antMatchers("/api/user/token").permitAll()//
+//                .antMatchers("/api/user/validate").permitAll()//
                 // Disallow everything else..
-                .anyRequest().authenticated();
+//                .anyRequest().authenticated();
 
         // Apply JWT
         http.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
